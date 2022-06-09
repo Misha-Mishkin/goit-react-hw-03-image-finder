@@ -1,0 +1,14 @@
+import s from './Modal.module.css';
+// import proptypes from 'proptypes';
+
+const Modal = () => {
+  return (
+    <div className={s.Overlay}>
+      <div className={s.Modal}>
+        <img src="" alt="" />
+      </div>
+    </div>
+  );
+};
+
+export default Modal;
