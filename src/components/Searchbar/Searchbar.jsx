@@ -7,10 +7,17 @@ class Searchbar extends Component {
     searchQuery: '',
   };
 
+  handleNameChange = event => {
+    this.setState({ searchQuery: event.currentTarget.value.toLowerCase() });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
+
+    if (this.state.searchQuery.trim() === '') {
+      return;
+    }
     this.props.onSubmit(this.state.searchQuery);
-    this.setState({ searchQuery: '' });
   };
 
   render() {
@@ -27,6 +34,7 @@ class Searchbar extends Component {
             autocomplete="off"
             autofocus
             placeholder="Search images and photos"
+            onChange={this.handleNameChange}
           />
         </form>
       </header>
