@@ -2,7 +2,7 @@ import { Component } from 'react';
 import s from './Searchbar.module.css';
 // import proptypes from 'proptypes';
 
-class Searchbar extends Component {
+export default class Searchbar extends Component {
   state = {
     searchQuery: '',
   };
@@ -41,5 +41,3 @@ class Searchbar extends Component {
     );
   }
 }
-
-export default Searchbar;

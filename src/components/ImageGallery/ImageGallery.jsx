@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import s from './ImageGallery.module.css';
 import PropTypes from 'proptypes';
-import ImageGalleryItem from 'components/ImageGalleryItem';
-import Modal from './Modal';
-import { RemoveScroll } from 'react-remove-scroll';
+import ImageGalleryItem from '../ImageGalleryItem';
+import Modal from '../Modal';
+// import { RemoveScroll } from 'react-remove-scroll';
 
-class ImageGallery extends Component {
+export default class ImageGallery extends Component {
   state = {
     showModal: false,
     largeImageURL: '',
@@ -15,10 +15,10 @@ class ImageGallery extends Component {
   static propTypes = {
     images: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        webformatURL: PropTypes.string.isRequired,
-        largeImageURL: PropTypes.string.isRequired,
-        tags: PropTypes.string.isRequired,
+        id: PropTypes.number,
+        webformatURL: PropTypes.string,
+        largeImageURL: PropTypes.string,
+        tags: PropTypes.string,
       })
     ),
   };
@@ -58,17 +58,13 @@ class ImageGallery extends Component {
           })}
         </ul>
         {this.state.showModal && (
-          <RemoveScroll>
-            <Modal
-              largeImageURL={this.state.largeImageURL}
-              tags={this.state.tags}
-              closeModal={this.closeModal}
-            />
-          </RemoveScroll>
+          <Modal
+            largeImageURL={this.state.largeImageURL}
+            tags={this.state.tags}
+            closeModal={this.closeModal}
+          />
         )}
       </>
     );
   }
 }
-
-export default ImageGallery;

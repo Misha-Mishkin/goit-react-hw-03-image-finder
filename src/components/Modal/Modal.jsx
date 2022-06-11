@@ -5,7 +5,7 @@ import PropTypes from 'proptypes';
 
 const modalRoot = document.querySelector('#modal-root');
 
-class Modal extends Component {
+export default class Modal extends Component {
   static propTypes = {
     largeImageURL: PropTypes.string.isRequired,
     tags: PropTypes.string.isRequired,
@@ -48,4 +48,4 @@ class Modal extends Component {
   };
 }
 
-export default Modal;
+
