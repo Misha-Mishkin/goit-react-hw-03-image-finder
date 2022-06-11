@@ -23,16 +23,16 @@ class Searchbar extends Component {
   render() {
     return (
       <header className={s.Searchbar}>
-        <form class="form" onSubmit={this.handleSubmit}>
-          <button type="submit" class="button">
-            <span class="button-label">Search</span>
+        <form className={s.SearchForm} onSubmit={this.handleSubmit}>
+          <button type="submit" className={s.SearchForm_button}>
+            <span className={s.Searchbar_button_label}>Search</span>
           </button>
 
           <input
-            class="input"
+            className={s.SearchForm_input}
             type="text"
-            autocomplete="off"
-            autofocus
+            autoComplete="off"
+            autoFocus
             placeholder="Search images and photos"
             onChange={this.handleNameChange}
           />

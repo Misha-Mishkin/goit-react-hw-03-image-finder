@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import ImageGallery from './ImageGallery';
 // import ImageGalleryItem from './ImageGalleryItem';
 import Searchbar from './Searchbar';
+import { fetchPicture } from './service.api.js';
+import s from './App.module.css'
 // import Modal from './Modal';
 // import Button from './Button';
 // import Loader from './Loader';
@@ -13,34 +15,47 @@ import Searchbar from './Searchbar';
 export class App extends Component {
   state = {
     searchQuery: '',
-    // gallery: null,
+    gallery: [],
+    error: null,
+    page: 1,
+    status: 'idle',
+    totalHits: null,
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.searchQuery !== this.state.searchQuery) {
-  //     fetch(
-  //       `https://pixabay.com/api/?q=${this.state.searchQuery}&page=1&key=27053567-d7028909cdd90784b9b54ea6e&image_type=photo&orientation=horizontal&per_page=12`
-  //     )
-  //       .then(res => res.json())
-  //       .then(gallery => this.setState({ gallery }));
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.searchQuery !== this.state.searchQuery) {
+      this.setState({ status: 'pending' });
+
+      fetchPicture(this.state.searchQuery, this.state.page)
+        .then(data => {
+          if (data.totalHits === 0) {
+            this.setState({
+              error: `Нет такого запроса ${this.state.searchQuery}`,
+            });
+          } else {
+            this.setState(prevState => ({
+              gallery: [...prevState.gallery, ...data.hits],
+              totalHits: data.totalHits,
+              error: null,
+              status: 'resolved',
+            }));
+          }
+        })
+        .catch(error => this.setState({ error, status: 'rejected' }));
+    }
+  }
 
   handleFormSubmit = searchQuery => {
     this.setState({ searchQuery });
   };
 
   render() {
+    const { gallery } = this.state;
     return (
-      <>
+      <div className={s.App}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {/* <div>
-          {this.state.searchQuery}
-        </div> */}
-        <ImageGallery searchQuery={this.state.searchQuery } />
-        {/* <ImageGalleryItem /> */}
-        {/* <Modal /> */}
-      </>
+        {gallery && <ImageGallery images={gallery} />}
+      </div>
     );
   }
 }

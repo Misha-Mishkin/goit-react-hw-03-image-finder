@@ -1,12 +1,21 @@
-// import s from './ImageGalleryItem.module.css';
-// import proptypes from 'proptypes';
+import s from './ImageGalleryItem.module.css';
+import PropTypes from 'proptypes';
 
-// const ImageGalleryItem = () => {
-//   return (
-//     <li className={s.ImageGalleryItem}>
-//       <img className={s.ImageGalleryItem_image} src="" alt="" />
-//     </li>
-//   );
-// };
+const ImageGalleryItem = ({ id, webformatURL, tags }) => {
+  return (
+    <li className={s.ImageGalleryItem} key={id}>
+          <img className={s.ImageGalleryItem_image}
+              src={webformatURL}
+              alt={tags}
+          />
+    </li>
+  );
+};
 
-// export default ImageGalleryItem;
+ImageGalleryItem.propTypes = {
+  id: PropTypes.string,
+  webformatURL: PropTypes.string,
+  tags: PropTypes.string,
+};
+
+export default ImageGalleryItem;
