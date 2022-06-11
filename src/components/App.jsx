@@ -4,7 +4,6 @@ import ImageGallery from './ImageGallery';
 import Searchbar from './Searchbar';
 import { fetchPicture } from './service.api.js';
 import s from './App.module.css';
-// import Modal from './Modal';
 // import Button from './Button';
 // import Loader from './Loader';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
@@ -22,7 +21,6 @@ export class App extends Component {
     page: 1,
     status: 'idle',
     totalHits: null,
-    loading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -62,7 +60,9 @@ export class App extends Component {
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {loading && <Bars color="#3f51b5" height={40} width={40} ariaLabel="loading" />}
+        {loading && (
+          <Bars color="#3f51b5" height={40} width={40} ariaLabel="loading" />
+        )}
         {gallery && <ImageGallery images={gallery} />}
       </div>
     );
