@@ -9,6 +9,7 @@ const ImageGallery = ({ images }) => {
         return (
           <ImageGalleryItem
             key={id}
+            id={id}
             tags={tags}
             smallImage={webformatURL}
             largeImage={largeImageURL}
@@ -20,7 +21,7 @@ const ImageGallery = ({ images }) => {
 };
 
 ImageGallery.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   webformatURL: PropTypes.string,
   largeImageURL: PropTypes.string,
   tags: PropTypes.string,

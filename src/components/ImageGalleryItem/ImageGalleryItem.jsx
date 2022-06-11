@@ -13,7 +13,7 @@ const ImageGalleryItem = ({ id, webformatURL, tags }) => {
 };
 
 ImageGalleryItem.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   webformatURL: PropTypes.string,
   tags: PropTypes.string,
 };
