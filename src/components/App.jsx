@@ -1,17 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import ImageGallery from './ImageGallery';
-// import ImageGalleryItem from './ImageGalleryItem';
 import Searchbar from './Searchbar';
+import Loader from './Loader';
+import Button from './Button';
 import { fetchPicture } from './service.api.js';
 import s from './App.module.css';
-// import Button from './Button';
-// import Loader from './Loader';
-import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-import { Bars } from 'react-loader-spinner';
 
-// API: 27053567-d7028909cdd90784b9b54ea6e
-
-// https://pixabay.com/api/?page=1&key=27053567-d7028909cdd90784b9b54ea6e&image_type=photo&orientation=horizontal&per_page=12
 
 export class App extends Component {
   state = {
@@ -24,7 +18,10 @@ export class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.page !== this.state.page
+    ) {
       this.setState({ status: 'pending' });
       this.setState({ loading: true });
 
@@ -32,7 +29,7 @@ export class App extends Component {
         .then(data => {
           if (data.totalHits === 0) {
             this.setState({
-              error: alert(`Нет такого запроса ${this.state.searchQuery}`),
+              error: alert(`По Вашему запросу "${this.state.searchQuery}" ничего не найдено`),
             });
           } else {
             this.setState(prevState => ({
@@ -51,19 +48,25 @@ export class App extends Component {
   }
 
   handleFormSubmit = searchQuery => {
-    this.setState({ searchQuery });
+    this.setState({ searchQuery: searchQuery, gallery: [], page: 1 });
+  };
+
+  onLoadMoreButton = () => {
+    this.setState(prevState => ({ page: prevState + 1 }));
   };
 
   render() {
-    const { gallery, loading } = this.state;
+    const { gallery, loading, totalHits, page } = this.state;
+    const totalPages = totalHits / 12;
 
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {loading && (
-          <Bars color="#3f51b5" height={40} width={40} ariaLabel="loading" />
-        )}
+        {loading && <Loader />}
         {gallery && <ImageGallery images={gallery} />}
+        {totalPages > page && (
+          <Button text="Load more" handleClick={this.onLoadMoreButton} />
+        )}
       </div>
     );
   }

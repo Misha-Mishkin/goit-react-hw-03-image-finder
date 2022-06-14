@@ -1,10 +1,14 @@
 import { Component } from 'react';
 import s from './Searchbar.module.css';
-// import proptypes from 'proptypes';
+import PropTypes from 'prop-types';
 
 export default class Searchbar extends Component {
   state = {
     searchQuery: '',
+  };
+
+  static propTypes = {
+    onSubmit: PropTypes.func.isRequired,
   };
 
   handleNameChange = event => {
@@ -12,12 +16,13 @@ export default class Searchbar extends Component {
   };
 
   handleSubmit = event => {
+    const { onSubmit } = this.props;
     event.preventDefault();
 
     if (this.state.searchQuery.trim() === '') {
       return;
     }
-    this.props.onSubmit(this.state.searchQuery);
+    onSubmit(this.state.searchQuery);
   };
 
   render() {
@@ -31,10 +36,12 @@ export default class Searchbar extends Component {
           <input
             className={s.SearchForm_input}
             type="text"
+            name="searchQuery"
             autoComplete="off"
             autoFocus
             placeholder="Search images and photos"
             onChange={this.handleNameChange}
+            value={this.state.searchQuery}
           />
         </form>
       </header>

@@ -1,6 +1,20 @@
-// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
-// import { Bars } from 'react-loader-spinner';
+import { Component } from 'react';
+import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import { Bars } from 'react-loader-spinner';
 
-
-
-// <Bars color="#00BFFF" height={80} width={80} ariaLabel="loading" />;
+export default class Loader extends Component {
+  render() {
+    return (
+      <Bars
+        color="#3f51b5"
+        height={50}
+        width={50}
+        ariaLabel="loading"
+        style={{
+          margin: '0, auto',
+          padding: '0, auto',
+        }}
+      />
+    );
+  }
+}

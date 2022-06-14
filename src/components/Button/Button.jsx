@@ -1,6 +1,19 @@
-// import s from './Button.module.css';
-// import proptypes from 'proptypes';
+import { Component } from 'react';
+import s from './Button.module.css';
+import PropTypes from 'prop-types';
 
-// const Button = () => {};
+export default class Button extends Component {
+  static propTypes = {
+    text: PropTypes.string.isRequired,
+    handleClick: PropTypes.func.isRequired,
+  };
 
-// export default Button;
+  render() {
+    const { text, handleClick } = this.props;
+    return (
+      <button className={s.Button} type="button" onClick={handleClick}>
+        {text}
+      </button>
+    );
+  }
+}

@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import s from './ImageGallery.module.css';
-import PropTypes from 'proptypes';
+import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem';
 import Modal from '../Modal';
-// import { RemoveScroll } from 'react-remove-scroll';
 
 export default class ImageGallery extends Component {
   state = {
@@ -15,10 +14,10 @@ export default class ImageGallery extends Component {
   static propTypes = {
     images: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number,
-        webformatURL: PropTypes.string,
-        largeImageURL: PropTypes.string,
-        tags: PropTypes.string,
+        id: PropTypes.number.isRequired,
+        webformatURL: PropTypes.string.isRequired,
+        largeImageURL: PropTypes.string.isRequired,
+        tags: PropTypes.string.isRequired,
       })
     ),
   };
@@ -49,10 +48,10 @@ export default class ImageGallery extends Component {
             return (
               <ImageGalleryItem
                 key={id}
-                id={id}
                 tags={tags}
                 webformatURL={webformatURL}
                 largeImageURL={largeImageURL}
+                showModal={this.showModal}
               />
             );
           })}
