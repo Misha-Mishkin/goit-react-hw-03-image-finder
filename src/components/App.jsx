@@ -6,7 +6,6 @@ import Button from './Button';
 import { fetchPicture } from './service.api.js';
 import s from './App.module.css';
 
-
 export class App extends Component {
   state = {
     searchQuery: '',
@@ -29,7 +28,10 @@ export class App extends Component {
         .then(data => {
           if (data.totalHits === 0) {
             this.setState({
-              error: alert(`По Вашему запросу "${this.state.searchQuery}" ничего не найдено`),
+              error: alert(
+                `По Вашему запросу "${this.state.searchQuery}" ничего не найдено!`
+              ),
+              status: 'rejected',
             });
           } else {
             this.setState(prevState => ({
@@ -52,7 +54,7 @@ export class App extends Component {
   };
 
   onLoadMoreButton = () => {
-    this.setState(prevState => ({ page: prevState + 1 }));
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   render() {
@@ -62,8 +64,8 @@ export class App extends Component {
     return (
       <div className={s.App}>
         <Searchbar onSubmit={this.handleFormSubmit} />
-        {loading && <Loader />}
         {gallery && <ImageGallery images={gallery} />}
+        {loading && <Loader />}
         {totalPages > page && (
           <Button text="Load more" handleClick={this.onLoadMoreButton} />
         )}

@@ -11,8 +11,8 @@ export default class Loader extends Component {
         width={50}
         ariaLabel="loading"
         style={{
-          margin: '0, auto',
-          padding: '0, auto',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
       />
     );

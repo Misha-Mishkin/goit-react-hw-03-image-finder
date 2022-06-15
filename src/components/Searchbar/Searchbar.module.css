@@ -73,3 +73,19 @@
   font: inherit;
   font-size: 18px;
 }
+
+.svg_icon {
+  width: 2em;
+  height: 2em;
+}
+
+.svg_icon path,
+.svg_icon polygon,
+.svg_icon rect {
+  fill: #4691f6;
+}
+
+.svg_icon circle {
+  stroke: #4691f6;
+  stroke-width: 1;
+}
