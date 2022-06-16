@@ -5,6 +5,8 @@ import Loader from './Loader';
 import Button from './Button';
 import { fetchPicture } from './service.api.js';
 import s from './App.module.css';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export class App extends Component {
   state = {
@@ -14,6 +16,7 @@ export class App extends Component {
     page: 1,
     status: 'idle',
     totalHits: null,
+    loading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -21,16 +24,14 @@ export class App extends Component {
       prevState.searchQuery !== this.state.searchQuery ||
       prevState.page !== this.state.page
     ) {
-      this.setState({ status: 'pending' });
-      this.setState({ loading: true });
+      this.setState({ status: 'pending', loading: true });
 
       fetchPicture(this.state.searchQuery, this.state.page)
         .then(data => {
           if (data.totalHits === 0) {
+            toast.error(`"${this.state.searchQuery}" not found!`);
             this.setState({
-              error: alert(
-                `По Вашему запросу "${this.state.searchQuery}" ничего не найдено!`
-              ),
+              error: `"${this.state.searchQuery}" not found!`,
               status: 'rejected',
             });
           } else {
@@ -58,7 +59,7 @@ export class App extends Component {
   };
 
   render() {
-    const { gallery, loading, totalHits, page } = this.state;
+    const { gallery, loading, totalHits, page, status } = this.state;
     const totalPages = totalHits / 12;
 
     return (
@@ -66,9 +67,10 @@ export class App extends Component {
         <Searchbar onSubmit={this.handleFormSubmit} />
         {gallery && <ImageGallery images={gallery} />}
         {loading && <Loader />}
-        {totalPages > page && (
+        {status === 'resolved' && totalPages > page && (
           <Button text="Load more" handleClick={this.onLoadMoreButton} />
         )}
+        <ToastContainer position="top-center" autoClose={3000} />
       </div>
     );
   }
